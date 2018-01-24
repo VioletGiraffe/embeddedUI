@@ -3,6 +3,10 @@
 #include "Size.h"
 #include "Color.h"
 
+#ifdef ARDUINO_AVR_UNO
+#include <StandardCplusplus.h>
+#endif
+
 #include <type_traits>
 
 class AbstractPainter
