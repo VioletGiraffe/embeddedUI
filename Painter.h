@@ -1,27 +1,31 @@
 #pragma once
 
 #include "default_constructible_ref.hpp"
-#include "DisplayAdapter.h"
 
-template<typename U, DisplayAdapter<U>& displayAdapter>
-class Painter
+#include <type_traits>
+
+class AbstractPainter
 {
-public:
-
 };
 
-template <class ConcreteDisplayAdapterType, typename ConcretePainter = Painter<typename ConcreteDisplayAdapterType::DisplayType, ConcreteDisplayAdapterType&>>
-class PainterFabricTemplate
+template <class Display, Display& displayInstance>
+class DisplayPainter : public AbstractPainter
 {
 public:
-	static void init(ConcreteDisplayAdapterType& display) {
-		_display = display;
-	}
+	using DisplayType = Display;
 
-	static ConcretePainter createPainter() {
-		return ConcretePainter(_display);
-	}
+	DisplayPainter() : _display(displayInstance) {}
 
-private:
-	static default_constructible_ref<ConcreteDisplayAdapterType> _display;
+protected:
+	Display& _display;
 };
+
+// template <class ConcretePainter>
+// class BasicPainter : public ConcretePainter
+// {
+// 	static_assert(std::is_base_of<AbstractPainter, ConcretePainter>::value, "ConcretePainter must inherit AbstractPainter.");
+// 
+// public:
+// 
+// };
+
