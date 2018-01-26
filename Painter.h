@@ -29,11 +29,11 @@ class DisplayPainter : public AbstractPainter<ConcreteImplementation>
 {
 public:
 	uint16_t displayWidth() const {
-		return static_cast<ConcreteImplementation&>(*this).displayWidth();
+		return static_cast<const ConcreteImplementation&>(*this).displayWidth();
 	}
 
 	uint16_t displayHeight() const {
-		return static_cast<ConcreteImplementation&>(*this).displayHeight();
+		return static_cast<const ConcreteImplementation&>(*this).displayHeight();
 	}
 
 	void fillScreen(const Color& color) {
