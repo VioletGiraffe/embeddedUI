@@ -3,61 +3,40 @@
 #include "Size.h"
 #include "Color.h"
 
-#ifdef ARDUINO_AVR_UNO
-#include <stlport.h>
-#endif
-
-#include <type_traits>
-
+template <class ConcreteImplementation>
 class AbstractPainter
 {
 public:
-	template <typename T = void>
 	void rect(const Point& topLeft, const Size& size, const Color& color) {
-		static_assert(!std::is_same<T, void>::value, "This method must be implemented by a subclass");
+		static_cast<ConcreteImplementation&>(*this).rect(topLeft, size, color);
 	}
 
-	template <typename T = void>
 	void rect(const Point& topLeft, const Point& bottomRight, const Color& color) {
-		static_assert(!std::is_same<T, void>::value, "This method must be implemented by a subclass");
+		static_cast<ConcreteImplementation&>(*this).rect(topLeft, bottomRight, color);
 	}
 
-	template <typename T = void>
 	void fillRect(const Point& topLeft, const Size& size, const Color& color) {
-		static_assert(!std::is_same<T, void>::value, "This method must be implemented by a subclass");
+		static_cast<ConcreteImplementation&>(*this).fillRect(topLeft, size, color);
 	}
 
-	template <typename T = void>
 	void fillRect(const Point& topLeft, const Point& bottomRight, const Color& color) {
-		static_assert(!std::is_same<T, void>::value, "This method must be implemented by a subclass");
+		static_cast<ConcreteImplementation&>(*this).fillRect(topLeft, bottomRight, color);
 	}
 };
 
-template <class Display, Display& displayInstance>
-class DisplayPainter : public AbstractPainter
+template <class ConcreteImplementation>
+class DisplayPainter : public AbstractPainter<ConcreteImplementation>
 {
 public:
-	using DisplayType = Display;
-
-	DisplayPainter() : _display(displayInstance) {}
-
-	template <typename T = void>
 	uint16_t displayWidth() const {
-		static_assert(!std::is_same<T, void>::value, "This method must be implemented by a subclass");
-		return 0;
+		return static_cast<ConcreteImplementation&>(*this).displayWidth();
 	}
 
-	template <typename T = void>
 	uint16_t displayHeight() const {
-		static_assert(!std::is_same<T, void>::value, "This method must be implemented by a subclass");
-		return 0;
+		return static_cast<ConcreteImplementation&>(*this).displayHeight();
 	}
 
-	template <typename T = void>
 	void fillScreen(const Color& color) {
-		static_assert(!std::is_same<T, void>::value, "This method must be implemented by a subclass");
+		this->fillRect(Point(0, 0), Size(displayWidth(), displayHeight()), color);
 	}
-
-protected:
-	Display& _display;
 };
