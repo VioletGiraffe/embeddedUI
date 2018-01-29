@@ -6,31 +6,32 @@
 #include <Adafruit_SSD1351.h>
 #endif
 
-template <Adafruit_SSD1351& displayInstance>
-class PainterAdafruitSsd1351 : public DisplayPainter<PainterAdafruitSsd1351<displayInstance>>
+class PainterAdafruitSsd1351 : public DisplayPainter<PainterAdafruitSsd1351>
 {
 public:
+	using DisplayType = Adafruit_SSD1351;
+
 	void rect(const Point& topLeft, const Size& size, const Color& color) {
-		displayInstance.drawRect(topLeft.x(), topLeft.y(), size.width(), size.height(), color.toRgb565());
+		_displayInstance.get().drawRect(topLeft.x(), topLeft.y(), size.width(), size.height(), color.toRgb565());
 	}
 
 	void rect(const Point& topLeft, const Point& bottomRight, const Color& color) {
-		displayInstance.drawRect(topLeft.x(), topLeft.y(), bottomRight.x() - topLeft.x(), bottomRight.y() - topLeft.y(), color.toRgb565());
+		_displayInstance.get().drawRect(topLeft.x(), topLeft.y(), bottomRight.x() - topLeft.x(), bottomRight.y() - topLeft.y(), color.toRgb565());
 	}
 
 	void fillRect(const Point& topLeft, const Size& size, const Color& color) {
-		displayInstance.fillRect(topLeft.x(), topLeft.y(), size.width(), size.height(), color.toRgb565());
+		_displayInstance.get().fillRect(topLeft.x(), topLeft.y(), size.width(), size.height(), color.toRgb565());
 	}
 
 	void fillRect(const Point& topLeft, const Point& bottomRight, const Color& color) {
-		displayInstance.fillRect(topLeft.x(), topLeft.y(), bottomRight.x() - topLeft.x(), bottomRight.y() - topLeft.y(), color.toRgb565());
+		_displayInstance.get().fillRect(topLeft.x(), topLeft.y(), bottomRight.x() - topLeft.x(), bottomRight.y() - topLeft.y(), color.toRgb565());
 	}
 
 	uint16_t displayWidth() const {
-		return static_cast<uint16_t>(displayInstance.width());
+		return static_cast<uint16_t>(_displayInstance.get().width());
 	}
 
 	uint16_t displayHeight() const {
-		return static_cast<uint16_t>(displayInstance.height());
+		return static_cast<uint16_t>(_displayInstance.get().height());
 	}
 };

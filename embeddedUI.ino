@@ -7,13 +7,18 @@ constexpr auto dc = 4;
 constexpr auto cs = 5;
 constexpr auto rst = 6;
 Adafruit_SSD1351 tft = Adafruit_SSD1351(cs, dc, rst);
-PainterAdafruitSsd1351<tft> painter;
+
+using PainterImplementation = PainterAdafruitSsd1351;
+
+PainterImplementation::setDisplayInstance(tft);
+PainterImplementation painter;
 
 void setup(void) {
  
 	tft.begin();
 
 	painter.fillScreen(Color(255, 127, 0));
+
 }
 
 void loop()

@@ -3,6 +3,8 @@
 #include "Size.h"
 #include "Color.h"
 
+#include "default_constructible_ref.hpp"
+
 template <class ConcreteImplementation>
 class AbstractPainter
 {
@@ -39,4 +41,11 @@ public:
 	void fillScreen(const Color& color) {
 		this->fillRect(Point(0, 0), Size(displayWidth(), displayHeight()), color);
 	}
+
+	static void setDisplayInstance(typename ConcreteImplementation::DisplayType& instance) {
+		_displayInstance = instance;
+	}
+
+protected:
+	static default_constructible_ref<typename ConcreteImplementation::DisplayType> _displayInstance;
 };

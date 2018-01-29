@@ -13,23 +13,11 @@ struct default_constructible_ref
 	}
 
 	T& get() {
-		if (_ref)
-			return *_ref;
-		else
-		{
-			static T dummy;
-			return dummy;
-		}
+		return *_ref;
 	}
 
 	const T& get() const {
-		if (_ref)
-			return *_ref;
-		else
-		{
-			static const T dummy;
-			return dummy;
-		}
+		return *_ref;
 	}
 
 private:
@@ -49,13 +37,7 @@ struct default_constructible_cref
 	}
 
 	const T& get() const {
-		if (_ref)
-			return *_ref;
-		else
-		{
-			static const T dummy;
-			return dummy;
-		}
+		return *_ref;
 	}
 
 private:
