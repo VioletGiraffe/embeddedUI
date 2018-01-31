@@ -26,7 +26,7 @@ public:
 	}
 };
 
-template <class ConcreteImplementation>
+template <class ConcreteImplementation, class DisplayType>
 class DisplayPainter : public AbstractPainter<ConcreteImplementation>
 {
 public:
@@ -42,10 +42,14 @@ public:
 		this->fillRect(Point(0, 0), Size(displayWidth(), displayHeight()), color);
 	}
 
-	static void setDisplayInstance(typename ConcreteImplementation::DisplayType& instance) {
+	static void setDisplayInstance(DisplayType& instance) {
 		_displayInstance = instance;
 	}
 
 protected:
-	static default_constructible_ref<typename ConcreteImplementation::DisplayType> _displayInstance;
+	static default_constructible_ref<DisplayType> _displayInstance;
 };
+
+// TODO: Why is this needed?
+template <class ConcreteImplementation, class DisplayType>
+default_constructible_ref<DisplayType> DisplayPainter<ConcreteImplementation, DisplayType>::_displayInstance;

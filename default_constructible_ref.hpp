@@ -8,6 +8,11 @@ struct default_constructible_ref
 	default_constructible_ref(const default_constructible_ref& other) = default;
 	default_constructible_ref& operator=(const default_constructible_ref& other) = default;
 
+	default_constructible_ref& operator=(T& reference) {
+		_ref = &reference;
+		return *this;
+	}
+
 	operator bool() const {
 		return _ref != nullptr;
 	}
@@ -31,6 +36,11 @@ struct default_constructible_cref
 	default_constructible_cref(const T& ref) : _ref(&ref) {}
 	default_constructible_cref(const default_constructible_cref& other) = default;
 	default_constructible_cref& operator=(const default_constructible_cref& other) = default;
+
+	default_constructible_cref& operator=(const T& reference) {
+		_ref = &reference;
+		return *this;
+	}
 
 	operator bool() const {
 		return _ref != nullptr;

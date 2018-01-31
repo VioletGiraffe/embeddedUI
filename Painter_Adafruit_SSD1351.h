@@ -6,11 +6,9 @@
 #include <Adafruit_SSD1351.h>
 #endif
 
-class PainterAdafruitSsd1351 : public DisplayPainter<PainterAdafruitSsd1351>
+class PainterAdafruitSsd1351 : public DisplayPainter<PainterAdafruitSsd1351, Adafruit_SSD1351>
 {
 public:
-	using DisplayType = Adafruit_SSD1351;
-
 	void rect(const Point& topLeft, const Size& size, const Color& color) {
 		_displayInstance.get().drawRect(topLeft.x(), topLeft.y(), size.width(), size.height(), color.toRgb565());
 	}

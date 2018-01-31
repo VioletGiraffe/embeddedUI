@@ -10,15 +10,15 @@ Adafruit_SSD1351 tft = Adafruit_SSD1351(cs, dc, rst);
 
 using PainterImplementation = PainterAdafruitSsd1351;
 
-PainterImplementation::setDisplayInstance(tft);
 PainterImplementation painter;
 
-void setup(void) {
- 
+void setup(void)
+{
+	PainterImplementation::setDisplayInstance(tft);
+
 	tft.begin();
 
 	painter.fillScreen(Color(255, 127, 0));
-
 }
 
 void loop()
