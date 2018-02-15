@@ -50,6 +50,5 @@ protected:
 	static default_constructible_ref<DisplayType> _displayInstance;
 };
 
-// TODO: Why is this needed?
 template <class ConcreteImplementation, class DisplayType>
 default_constructible_ref<DisplayType> DisplayPainter<ConcreteImplementation, DisplayType>::_displayInstance;

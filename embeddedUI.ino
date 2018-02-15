@@ -2,6 +2,7 @@
 #include <Adafruit_SSD1351.h>
 
 #include "Painter_Adafruit_SSD1351.h"
+#include "Screen.h"
 
 constexpr auto dc = 4;
 constexpr auto cs = 5;
@@ -11,6 +12,7 @@ Adafruit_SSD1351 tft = Adafruit_SSD1351(cs, dc, rst);
 using PainterImplementation = PainterAdafruitSsd1351;
 
 PainterImplementation painter;
+Screen screen;
 
 void setup(void)
 {
