@@ -34,11 +34,12 @@ protected:
 		onDraw(_size);
 	}
 
+	// Polymorphic function - must be redefined by the subclass
 	void onDraw(Size regionToUpdate) {
 		static_cast<ConcreteWidget*>(this)->onDraw(regionToUpdate);
 	}
 
-private:
+protected:
 	Attributes _attributes;
 	Point _topLeft;
 	Size _size;

@@ -12,7 +12,7 @@ Adafruit_SSD1351 tft = Adafruit_SSD1351(cs, dc, rst);
 using PainterImplementation = PainterAdafruitSsd1351;
 
 PainterImplementation painter;
-Screen screen;
+Screen<PainterImplementation> screen;
 
 void setup(void)
 {

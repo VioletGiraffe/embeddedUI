@@ -25,11 +25,11 @@ public:
 		_displayInstance.get().fillRect(topLeft.x(), topLeft.y(), bottomRight.x() - topLeft.x(), bottomRight.y() - topLeft.y(), color.toRgb565());
 	}
 
-	uint16_t displayWidth() const {
+	static uint16_t screenWidth() {
 		return static_cast<uint16_t>(_displayInstance.get().width());
 	}
 
-	uint16_t displayHeight() const {
+	static uint16_t screenHeight() {
 		return static_cast<uint16_t>(_displayInstance.get().height());
 	}
 };
