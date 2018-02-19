@@ -29,6 +29,10 @@ public:
 		_displayInstance.get().fillScreen(color.toRgb565());
 	}
 
+	void setPixel(const Point& pixel, const Color& color) {
+		_displayInstance.get().drawPixel(pixel.x(), pixel.y(), color.toRgb565());
+	}
+
 	static uint16_t screenWidth() {
 		return static_cast<uint16_t>(_displayInstance.get().width());
 	}
