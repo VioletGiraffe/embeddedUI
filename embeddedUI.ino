@@ -1,6 +1,3 @@
-#include <Adafruit_GFX.h>
-#include <Adafruit_SSD1351.h>
-
 #include "Painter_Adafruit_SSD1351.h"
 #include "Screen.h"
 

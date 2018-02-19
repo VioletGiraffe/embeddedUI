@@ -2,6 +2,8 @@
 
 #include "Painter.h"
 
+#include <Adafruit_GFX.h>
+
 #ifndef SSD1351_COLORORDER_RGB // Adafruit_SSD1351.h lacks its own include guard, we're using a macro defined in Adafruit_SSD1351.h as the guard
 #include <Adafruit_SSD1351.h>
 #endif
