@@ -10,27 +10,31 @@ public:
 		uint8_t frameWidth = 0;
 	};
 
-	inline Widget(const Point& topLeft = Point{ 0, 0 }, const Size& size = Size{ 0, 0 }) : _topLeft(topLeft), _size(size) {}
+	Widget(const Point& topLeft = Point{ 0, 0 }, const Size& size = Size{ 0, 0 }) : _topLeft(topLeft), _size(size) {}
 
-	inline const Attributes& attributes() const {
+	const Attributes& attributes() const {
 		return _attributes;
 	}
 
-	inline void setAttributes(const Attributes& attrs) {
+	void setAttributes(const Attributes& attrs) {
 		_attributes = attrs;
 	}
 
-	inline Point topLeft() const {
+	Point topLeft() const {
 		return _topLeft;
 	}
 
-	inline Size size() const {
+	Size size() const {
 		return _size;
+	}
+
+	void update() {
+		onDraw();
 	}
 
 protected:
 	// Events
-	inline void onDraw() {
+	void onDraw() {
 		onDraw(_size);
 	}
 
