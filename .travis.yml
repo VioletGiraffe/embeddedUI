@@ -4,5 +4,6 @@ python:
 install:
     - pip install -U platformio
 script:
+    - platformio run -e esp32
     - platformio run -e uno
     - platformio run -e due

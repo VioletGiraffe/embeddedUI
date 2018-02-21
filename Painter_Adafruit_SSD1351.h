@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Painter.h"
+#include "Painter_Adafruit_Base.h"
 
 #include <Adafruit_GFX.h>
 
@@ -8,38 +8,8 @@
 #include <Adafruit_SSD1351.h>
 #endif
 
-class PainterAdafruitSsd1351 : public DisplayPainter<PainterAdafruitSsd1351, Adafruit_SSD1351>
+class PainterAdafruitSsd1351 : public PainterAdafruitBase<PainterAdafruitSsd1351, Adafruit_SSD1351>
 {
 public:
-	void rect(const Point& topLeft, const Size& size, const Color& color) {
-		_displayInstance.get().drawRect(topLeft.x(), topLeft.y(), size.width(), size.height(), color.toRgb565());
-	}
-
-	void rect(const Point& topLeft, const Point& bottomRight, const Color& color) {
-		_displayInstance.get().drawRect(topLeft.x(), topLeft.y(), bottomRight.x() - topLeft.x(), bottomRight.y() - topLeft.y(), color.toRgb565());
-	}
-
-	void fillRect(const Point& topLeft, const Size& size, const Color& color) {
-		_displayInstance.get().fillRect(topLeft.x(), topLeft.y(), size.width(), size.height(), color.toRgb565());
-	}
-
-	void fillRect(const Point& topLeft, const Point& bottomRight, const Color& color) {
-		_displayInstance.get().fillRect(topLeft.x(), topLeft.y(), bottomRight.x() - topLeft.x(), bottomRight.y() - topLeft.y(), color.toRgb565());
-	}
-
-	void fillScreen(const Color& color) {
-		_displayInstance.get().fillScreen(color.toRgb565());
-	}
-
-	void setPixel(const Point& pixel, const Color& color) {
-		_displayInstance.get().drawPixel(pixel.x(), pixel.y(), color.toRgb565());
-	}
-
-	static uint16_t screenWidth() {
-		return static_cast<uint16_t>(_displayInstance.get().width());
-	}
-
-	static uint16_t screenHeight() {
-		return static_cast<uint16_t>(_displayInstance.get().height());
-	}
+	
 };

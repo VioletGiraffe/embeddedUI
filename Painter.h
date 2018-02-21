@@ -47,7 +47,7 @@ public:
 	}
 
 	void fillScreen(const Color& color) {
-		static_cast<const ConcreteImplementation&>(*this).fillScreen();
+		static_cast<ConcreteImplementation&>(*this).fillScreen();
 	}
 
 	static void setDisplayInstance(DisplayType& instance) {
