@@ -46,24 +46,29 @@ protected:
 		return q * (q + x_offset) < 0.25f * im_sqr;
 	}
 
-	void onDraw(Size /* regionToUpdate */) {
-		
-
+	void onDraw(Size /* regionToUpdate */)
+	{
 		float MinRe = -2.0;
 		float MaxRe = 1.0;
 		float MinIm = -1.2;
-		float MaxIm = MinIm+(MaxRe-MinRe)*this->_size.height()/this->_size.width();
-		float Re_factor = (MaxRe-MinRe)/(this->_size.width()-1);
-		float Im_factor = (MaxIm-MinIm)/(this->_size.height()-1);
-		constexpr unsigned int MaxIterations = 30;
 
 		ConcretePainter painter;
-		painter.fillScreen(Color::violet());
+		//const auto w = painter.displayWidth(), h = painter.displayHeight();
 
-		for(unsigned int y = 0, height = this->_size.height(); y < height; ++y)
+		const auto w = 128, h = 128;
+
+		float MaxIm = MinIm+(MaxRe-MinRe)*h/w;
+		float Re_factor = (MaxRe-MinRe)/(w-1);
+		float Im_factor = (MaxIm-MinIm)/(h-1);
+		constexpr unsigned int MaxIterations = 30;
+
+		
+		painter.fillScreen(Color::magenta());
+
+		for(unsigned int y = 0; y < h; ++y)
 		{
 			float c_im = MaxIm - y*Im_factor;
-			for(unsigned int x = 0, width = this->_size.width(); x < width; ++x)
+			for(unsigned int x = 0; x < w; ++x)
 			{
 				float c_re = MinRe + x*Re_factor;
 
@@ -82,7 +87,7 @@ protected:
 				}
 
 				if (isInside)
-					painter.setPixel(Point{x, y}, Color::black());
+					painter.setPixel(x, y, Color::black());
 			}
 		}
 	}
@@ -96,7 +101,6 @@ void setup(void)
 	Serial.println(F("Bootup successful"));
 
 	tft.begin();
-	PainterImplementation().fillScreen(Color::red());
 }
 
 uint32_t loopCount = 0;

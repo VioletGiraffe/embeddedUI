@@ -31,6 +31,10 @@ public:
 		Parent::_displayInstance.get().drawPixel(pixel.x(), pixel.y(), color.toRgb565());
 	}
 
+	void setPixel(uint16_t x, uint16_t y, const Color& color) {
+		setPixel(Point{x, y}, color);
+	}
+
 	static uint16_t screenWidth() {
 		return static_cast<uint16_t>(Parent::_displayInstance.get().width());
 	}
