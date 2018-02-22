@@ -1,23 +1,24 @@
 #include "Screen.h"
-#include "Painter_SSD13XX.h"
 
-// constexpr auto dc = 4;
-// constexpr auto cs = 5;
-// constexpr auto rst = 6;
-// Adafruit_SSD1351 tft = Adafruit_SSD1351(cs, dc, rst);
+#if defined ARDUINO_AVR_UNO
 
-#define _cs   17  // goes to TFT CS
-#define _dc   16  // goes to TFT DC
-#define _mosi 23  // goes to TFT MOSI
-#define _sclk 18  // goes to TFT SCK/CLK
-#define _rst  5   // ESP RST to TFT RESET
-#define _miso     // Not connected
-//       3.3V     // Goes to TFT LED  
-//       5v       // Goes to TFT Vcc
-//       Gnd      // Goes to TFT Gnd      
+	#include "TFTLCD_Screen_Setup.h"
+	#include "Painter_Adafruit_TFTLCD.hpp"
+	using PainterImplementation = PainterAdafruitTftLcd;
 
-SSD_13XX tft(_cs, _dc);
-using PainterImplementation = PainterSsd13XX;
+#elif defined ARDUINO_SAM_DUE
+
+	#include "TFTLCD_Screen_Setup.h"
+	#include "Painter_Adafruit_TFTLCD.hpp"
+	using PainterImplementation = PainterAdafruitTftLcd;
+
+#elif defined ESP32
+
+	#include "SSD1351_Screen_Setup_SSD13XX.h"
+	#include "Painter_SSD13XX.h"
+	using PainterImplementation = PainterSsd13XX;
+
+#endif
 
 struct Initializer {
 	inline Initializer() {
