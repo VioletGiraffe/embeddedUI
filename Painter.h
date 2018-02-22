@@ -3,8 +3,6 @@
 #include "Size.h"
 #include "Color.h"
 
-#include "default_constructible_ref.hpp"
-
 template <class ConcreteImplementation>
 class AbstractPainter
 {
@@ -51,12 +49,12 @@ public:
 	}
 
 	static void setDisplayInstance(DisplayType& instance) {
-		_displayInstance = instance;
+		_displayInstance = &instance;
 	}
 
 protected:
-	static default_constructible_ref<DisplayType> _displayInstance;
+	static DisplayType* _displayInstance;
 };
 
 template <class ConcreteImplementation, class DisplayType>
-default_constructible_ref<DisplayType> DisplayPainter<ConcreteImplementation, DisplayType>::_displayInstance;
+DisplayType* DisplayPainter<ConcreteImplementation, DisplayType>::_displayInstance = nullptr;
