@@ -112,7 +112,7 @@ void setup(void)
 #if defined ARDUINO_AVR_UNO
 	Serial.println(F("Board: Uno"));
 	tft.begin();
-#elif defined ARDUINO_AVR_DUE
+#elif defined ARDUINO_SAM_DUE
 	Serial.println(F("Board: Due"));
 	tft.begin(0x9341);
 #else
