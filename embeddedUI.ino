@@ -54,9 +54,7 @@ protected:
 		float MinIm = -1.2;
 
 		ConcretePainter painter;
-		//const auto w = painter.displayWidth(), h = painter.displayHeight();
-
-		const auto w = 128, h = 128;
+		const auto w = painter.screenWidth(), h = painter.screenHeight();
 
 		float MaxIm = MinIm+(MaxRe-MinRe)*h/w;
 		float Re_factor = (MaxRe-MinRe)/(w-1);
@@ -64,7 +62,7 @@ protected:
 		constexpr unsigned int MaxIterations = 30;
 
 		
-		painter.fillScreen(Color::magenta());
+		painter.fillScreen(Color::black());
 
 		for(unsigned int y = 0; y < h; ++y)
 		{
@@ -88,7 +86,7 @@ protected:
 				}
 
 				if (isInside)
-					painter.setPixel(x, y, Color::black());
+					painter.setPixel(x, y, Color::white());
 			}
 		}
 	}
@@ -100,8 +98,13 @@ void setup(void)
 {
 	Serial.begin(115200);
 	Serial.println(F("Bootup successful"));
+#if defined ARDUINO_AVR_UNO
+	Serial.println(F("Board: Uno"));
+#else
+	Serial.println(F("Board: Unknown"));
+#endif
 
-	tft.begin();
+	tft.begin(0x9341);
 }
 
 uint32_t loopCount = 0;

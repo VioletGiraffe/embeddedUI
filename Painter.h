@@ -36,12 +36,12 @@ template <class ConcreteImplementation, class DisplayType>
 class DisplayPainter : public AbstractPainter<ConcreteImplementation>
 {
 public:
-	uint16_t displayWidth() const {
-		return static_cast<const ConcreteImplementation&>(*this).displayWidth();
+	uint16_t screenWidth() const {
+		return static_cast<const ConcreteImplementation&>(*this).screenWidth();
 	}
 
-	uint16_t displayHeight() const {
-		return static_cast<const ConcreteImplementation&>(*this).displayHeight();
+	uint16_t screenHeight() const {
+		return static_cast<const ConcreteImplementation&>(*this).screenHeight();
 	}
 
 	void fillScreen(const Color& color) {
