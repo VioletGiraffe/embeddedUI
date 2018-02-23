@@ -60,20 +60,22 @@ protected:
 		float Re_factor = (MaxRe-MinRe)/(w-1);
 		float Im_factor = (MaxIm-MinIm)/(h-1);
 		constexpr unsigned int MaxIterations = 30;
+		constexpr float maxIterationsInverse = 1.0f / MaxIterations;
 
-		
 		painter.fillScreen(Color::black());
 
 		for(unsigned int y = 0; y < h; ++y)
 		{
 			float c_im = MaxIm - y*Im_factor;
+			
 			for(unsigned int x = 0; x < w; ++x)
 			{
 				float c_re = MinRe + x*Re_factor;
 
 				float Z_re = c_re, Z_im = c_im;
 				bool isInside = true;
-				for(unsigned int n = 0; n < MaxIterations; ++n)
+				unsigned int n = 0;
+				for(; n < MaxIterations; ++n)
 				{
 					float Z_re2 = Z_re*Z_re, Z_im2 = Z_im*Z_im;
 					if(Z_re2 + Z_im2 > 4)
@@ -86,7 +88,15 @@ protected:
 				}
 
 				if (isInside)
-					painter.setPixel(x, y, Color::white());
+				{
+					const float t = (float)n * maxIterationsInverse;
+  
+					// Use smooth polynomials for r, g, b
+					const int r = (int)(9*(1-t)*t*t*t*255);
+					const int g = (int)(15*(1-t)*(1-t)*t*t*255);
+					const int b =  (int)(8.5*(1-t)*(1-t)*(1-t)*t*255);	
+					painter.setPixel(x, y, Color(200, 200, 200));
+				}
 			}
 		}
 	}
@@ -98,13 +108,17 @@ void setup(void)
 {
 	Serial.begin(115200);
 	Serial.println(F("Bootup successful"));
+
 #if defined ARDUINO_AVR_UNO
 	Serial.println(F("Board: Uno"));
+	tft.begin();
+#elif defined ARDUINO_AVR_DUE
+	Serial.println(F("Board: Due"));
+	tft.begin(0x9341);
 #else
 	Serial.println(F("Board: Unknown"));
+	tft.begin();
 #endif
-
-	tft.begin(0x9341);
 }
 
 uint32_t loopCount = 0;
