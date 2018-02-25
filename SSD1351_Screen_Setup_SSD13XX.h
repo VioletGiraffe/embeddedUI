@@ -13,3 +13,7 @@
 //       Gnd      // Goes to TFT Gnd      
 
 SSD_13XX tft(_cs, _dc);
+
+inline void tftInit() {
+    tft.begin();
+}

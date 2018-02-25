@@ -43,3 +43,7 @@
 #define LCD_RESET A4
 
 Adafruit_TFTLCD tft(LCD_CS, LCD_CD, LCD_WR, LCD_RD, LCD_RESET);
+
+inline void tftInit() {
+    tft.begin(0x9341);
+}

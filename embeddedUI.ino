@@ -14,9 +14,9 @@
 
 #elif defined ESP32
 
-	#include "SSD1351_Screen_Setup_SSD13XX.h"
-	#include "Painter_SSD13XX.h"
-	using PainterImplementation = PainterSsd13XX;
+	#include "ST7735_Screen_Setup_Adafruit.h"
+	#include "Painter_Adafruit_ST7735.h"
+	using PainterImplementation = PainterAdafruitST7735;
 
 #endif
 
@@ -109,16 +109,7 @@ void setup(void)
 	Serial.begin(115200);
 	Serial.println(F("Bootup successful"));
 
-#if defined ARDUINO_AVR_UNO
-	Serial.println(F("Board: Uno"));
-	tft.begin();
-#elif defined ARDUINO_SAM_DUE
-	Serial.println(F("Board: Due"));
-	tft.begin(0x9341);
-#else
-	Serial.println(F("Board: Unknown"));
-	tft.begin();
-#endif
+	tftInit();
 }
 
 uint32_t loopCount = 0;
