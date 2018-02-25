@@ -57,7 +57,7 @@ public:
 
 private:
 	inline static uint16_t to565(uint8_t ch1, uint8_t ch2, uint8_t ch3) {
-		return ((static_cast<uint16_t>(ch1) << 8) | (static_cast<uint16_t>(ch2) << 3) | (static_cast<uint16_t>(ch3) >> 3));
+		return ((static_cast<uint16_t>(ch1 & 0b11111000) << 8) | (static_cast<uint16_t>(ch2 & 0b11111100) << 3) | (static_cast<uint16_t>(ch3) >> 3));
 	}
 
 	inline static uint32_t to32bit(uint8_t ch1, uint8_t ch2, uint8_t ch3) {

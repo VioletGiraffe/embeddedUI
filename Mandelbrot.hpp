@@ -67,15 +67,15 @@ protected:
 					Z_re = Z_re2 - Z_im2 + c_re;
 				}
 
-				if (isInside)
+				if (!isInside)
 				{
 					const float t = (float)n * maxIterationsInverse;
   
 					// Use smooth polynomials for r, g, b
-					const int r = (int)(9*(1-t)*t*t*t*255);
-					const int g = (int)(15*(1-t)*(1-t)*t*t*255);
-					const int b =  (int)(8.5*(1-t)*(1-t)*(1-t)*t*255);	
-					painter.setPixel(x, y, Color(200, 200, 200));
+					const int r = (int)(9*(1-t)*t*t*t*255.0f);
+					const int g = (int)(15*(1-t)*(1-t)*t*t*255.0f);
+					const int b =  (int)(8.5*(1-t)*(1-t)*(1-t)*t*255.0f);
+					painter.setPixel(x, y, Color(r, g, b));
 				}
 			}
 		}
@@ -87,8 +87,6 @@ TestScreen<PainterImplementation> screen;
 inline void setupExample()
 {
 	tftInit();
-	PainterImplementation().fillScreen(Color(200, 200, 200));
-	return;
 	screen.update();
 }
 
