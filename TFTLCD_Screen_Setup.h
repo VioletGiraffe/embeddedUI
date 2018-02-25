@@ -1,5 +1,6 @@
 #pragma once
 
+#include <Adafruit_GFX.h>
 #include <Adafruit_TFTLCD.h>
 
 // When using the BREAKOUT BOARD only, use these 8 data lines to the LCD:

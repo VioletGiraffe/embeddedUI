@@ -1,5 +1,6 @@
 #pragma once
 
+#include <Adafruit_GFX.h>
 #include <Adafruit_SSD1351.h>
 
 constexpr auto dc = 4;

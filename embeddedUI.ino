@@ -8,9 +8,9 @@
 
 #elif defined ARDUINO_SAM_DUE
 
-	#include "TFTLCD_Screen_Setup.h"
-	#include "Painter_Adafruit_TFTLCD.hpp"
-	using PainterImplementation = PainterAdafruitTftLcd;
+	#include "SSD1351_Screen_Setup_Adafruit.h"
+	#include "Painter_Adafruit_SSD1351.h"
+	using PainterImplementation = PainterAdafruitSsd1351;
 
 #elif defined ESP32
 
@@ -110,6 +110,8 @@ void setup(void)
 	Serial.println(F("Bootup successful"));
 
 	tftInit();
+
+	PainterAdafruitSsd1351().fillScreen(Color().to565());
 }
 
 uint32_t loopCount = 0;
@@ -118,5 +120,5 @@ void loop()
 {
 	Serial.println(++loopCount);
 	
-	screen.update();
+	//screen.update();
 }
