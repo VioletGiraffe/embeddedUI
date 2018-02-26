@@ -8,9 +8,9 @@
 
 #elif defined ARDUINO_SAM_DUE
 
-	#include "SSD1351_Screen_Setup_Adafruit.h"
-	#include "Painter_Adafruit_SSD1351.h"
-	using PainterImplementation = PainterAdafruitSsd1351;
+	#include "Mcufriend_Screen_Setup.h"
+	#include "Painter_MCUFRIEND.h"
+	using PainterImplementation = PainterMcufriend;
 
 #elif defined ESP32
 
