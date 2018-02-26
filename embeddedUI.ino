@@ -2,9 +2,9 @@
 
 #if defined ARDUINO_AVR_UNO
 
-	#include "TFTLCD_Screen_Setup.h"
-	#include "Painter_Adafruit_TFTLCD.hpp"
-	using PainterImplementation = PainterAdafruitTftLcd;
+	#include "SSD1351_Screen_Setup_Adafruit.h"
+	#include "Painter_Adafruit_SSD1351.h"
+	using PainterImplementation = PainterAdafruitSsd1351;
 
 #elif defined ARDUINO_SAM_DUE
 
@@ -20,7 +20,14 @@
 
 #endif
 
-#include "Mandelbrot.hpp"
+struct Initializer {
+	inline Initializer() {
+		// Has to be set prior to creating the Screen object
+		PainterImplementation::setDisplayInstance(tft);
+	}
+} staticInitializer;
+
+#include "Colors_test.hpp"
 
 void setup(void)
 {

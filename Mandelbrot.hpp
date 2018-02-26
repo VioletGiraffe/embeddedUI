@@ -1,12 +1,5 @@
 #pragma once
 
-struct Initializer {
-	inline Initializer() {
-		// Has to be set prior to creating the Screen object
-		PainterImplementation::setDisplayInstance(tft);
-	}
-} staticInitializer;
-
 template <class ConcretePainter>
 class TestScreen: public Screen<ConcretePainter, TestScreen<ConcretePainter>> {
 
