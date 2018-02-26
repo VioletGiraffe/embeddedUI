@@ -17,6 +17,10 @@ public:
 	TestScreen() {
 	}
 
+	void setDisablePaint(bool disable) {
+		_disablePaint = disable;
+	}
+
 protected:
 	bool pointBelongsToCardioid(float re, float im)
 	{
@@ -42,7 +46,8 @@ protected:
 		constexpr unsigned int MaxIterations = 30;
 		constexpr float maxIterationsInverse = 1.0f / MaxIterations;
 
-		painter.fillScreen(Color::black());
+		if (!_disablePaint)
+			painter.fillScreen(Color::black());
 
 		for(unsigned int y = 0; y < h; ++y)
 		{
@@ -75,11 +80,16 @@ protected:
 					const int r = (int)(9*(1-t)*t*t*t*255.0f);
 					const int g = (int)(15*(1-t)*(1-t)*t*t*255.0f);
 					const int b =  (int)(8.5*(1-t)*(1-t)*(1-t)*t*255.0f);
-					painter.setPixel(x, y, Color(r, g, b));
+
+					if (!_disablePaint)
+						painter.setPixel(x, y, Color(r, g, b));
 				}
 			}
 		}
 	}
+
+private:
+	bool _disablePaint = false;
 };
 
 TestScreen<PainterImplementation> screen;
@@ -87,7 +97,22 @@ TestScreen<PainterImplementation> screen;
 inline void setupExample()
 {
 	tftInit();
+
+	auto start = millis();
 	screen.update();
+	const auto totalTime = millis() - start;
+
+	screen.setDisablePaint(true);
+
+	start = millis();
+	screen.update();
+	const auto calculationTime = millis() - start;
+	const auto paintTime = totalTime - calculationTime;
+
+	Serial.println("Drawing Mandelbrot set in " + String(screen.width()) + '*' + String(screen.height()));
+	Serial.println("Total time: " + String(totalTime) + " ms (" + String((uint32_t)screen.width() * (uint32_t)screen.height() * 1000 / totalTime) + " pixels / second)");
+	Serial.println("Calculation time: " + String(calculationTime) + " ms (" + String((uint32_t)screen.width() * (uint32_t)screen.height() * 1000 / calculationTime) + " pixels / second)");
+	Serial.println("Paint time: " + String(paintTime) + " ms (" + String((uint32_t)screen.width() * (uint32_t)screen.height() * 1000 / paintTime) + " pixels / second)");
 }
 
 inline void loopExample()

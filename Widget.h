@@ -28,6 +28,14 @@ public:
 		return _size;
 	}
 
+	uint16_t width() const {
+		return _size.width();
+	}
+
+	uint16_t height() const {
+		return _size.height();
+	}
+
 	void update() {
 		onDraw();
 	}
