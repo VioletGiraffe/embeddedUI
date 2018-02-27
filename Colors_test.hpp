@@ -18,10 +18,15 @@ protected:
             Color::red(),
             Color::orange(),
             Color::yellow(),
+            Color::lawnGreen(),
             Color::green(),
+            Color::springGreen(),           
             Color::cyan(),
+            Color::azure(),
             Color::blue(),
-            Color::violet()
+            Color::violet(),
+            Color::magenta(),
+            Color::pink()
         };
 
         ConcretePainter painter;
