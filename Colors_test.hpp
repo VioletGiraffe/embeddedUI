@@ -16,7 +16,7 @@ protected:
 	{
         ConcretePainter painter;
 
-        constexpr int stripeHeight = 4;
+        constexpr int stripeHeight = 1;
         const int numColors = this->height() / stripeHeight;
         for (uint8_t i = 0; i < numColors; ++i)
         {
