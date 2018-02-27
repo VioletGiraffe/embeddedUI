@@ -12,6 +12,64 @@ class Color
 public:
 	inline explicit Color(uint8_t r = 0, uint8_t g = 0, uint8_t b = 0) : _r(r), _g(g), _b(b) {};
 
+	static inline Color fromHSV(uint16_t h, uint8_t s, uint8_t v) {
+		Color out;
+
+		if (s <= 0.0f)
+		{
+			out._r = v;
+			out._g = v;
+			out._b = v;
+			return out;
+		}
+
+		float hh = h / 60.0f;
+		uint16_t i = (uint16_t)hh;
+		
+		float ff = hh - i;
+		const float vFloat = v / 255.0f, sFloat = s / 255.0f;
+		const float p = vFloat * (1.0f - sFloat);
+		const float q = vFloat * (1.0f - (sFloat * ff));
+		const float t = vFloat * (1.0f - (sFloat * (1.0f - ff)));
+
+		switch(i) {
+		case 0:
+			out._r = v;
+			out._g = static_cast<uint8_t>(t * 255.0f);
+			out._b = static_cast<uint8_t>(p * 255.0f);
+			break;
+		case 1:
+			out._r = static_cast<uint8_t>(q * 255.0f);
+			out._g = v;
+			out._b = static_cast<uint8_t>(255.0f * p);
+			break;
+		case 2:
+			out._r = static_cast<uint8_t>(255.0f * p);
+			out._g = v;
+			out._b = static_cast<uint8_t>(255.0f * t);
+			break;
+
+		case 3:
+			out._r = static_cast<uint8_t>(255.0f * p);
+			out._g = static_cast<uint8_t>(255.0f * q);
+			out._b = v;
+			break;
+		case 4:
+			out._r = static_cast<uint8_t>(255.0f * t);
+			out._g = static_cast<uint8_t>(255.0f * p);
+			out._b = v;
+			break;
+		case 5:
+		default:
+			out._r = v;
+			out._g = static_cast<uint8_t>(255.0f * p);
+			out._b = static_cast<uint8_t>(255.0f * q);
+			break;
+		}
+
+		return out;     
+	}
+
 	inline uint16_t toRgb565() const {
 		return to565(_r, _g, _b);
 	}
