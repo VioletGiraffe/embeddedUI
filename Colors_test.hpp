@@ -34,7 +34,6 @@ TestScreen<PainterImplementation> screen;
 inline void setupExample()
 {
 	tftInit();
-
     screen.update();
 }
 
