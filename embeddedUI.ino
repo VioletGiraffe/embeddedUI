@@ -27,7 +27,7 @@ struct Initializer {
 	}
 } staticInitializer;
 
-#include "Colors_test.hpp"
+#include "Mandelbrot.hpp"
 
 void setup(void)
 {

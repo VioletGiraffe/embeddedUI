@@ -15,7 +15,7 @@ public:
 	}
 
 protected:
-	bool pointBelongsToCardioid(float re, float im)
+	inline bool pointBelongsToCardioid(const float re, const float im)
 	{
 		const auto x_offset = re - 0.25f;
 		const auto im_sqr = im * im;
@@ -23,6 +23,7 @@ protected:
 		const auto q = x_offset * x_offset + im_sqr;
 		return q * (q + x_offset) < 0.25f * im_sqr;
 	}
+
 
 	void onDraw(Size /* regionToUpdate */)
 	{
@@ -36,7 +37,7 @@ protected:
 		float MaxIm = MinIm+(MaxRe-MinRe)*h/w;
 		float Re_factor = (MaxRe-MinRe)/(w-1);
 		float Im_factor = (MaxIm-MinIm)/(h-1);
-		constexpr unsigned int MaxIterations = 30;
+		constexpr uint8_t MaxIterations = 30;
 		constexpr float maxIterationsInverse = 1.0f / MaxIterations;
 
 		if (!_disablePaint)
@@ -52,18 +53,38 @@ protected:
 
 				float Z_re = c_re, Z_im = c_im;
 				bool isInside = true;
-				unsigned int n = 0;
-				for(; n < MaxIterations; ++n)
+				uint8_t n = 0;
+
+				if (!pointBelongsToCardioid(Z_re, Z_im))
 				{
-					float Z_re2 = Z_re*Z_re, Z_im2 = Z_im*Z_im;
-					if(Z_re2 + Z_im2 > 4)
+					float prevValuesRe[2] = {0.0f}, prevValuesIm[2] = {0.0f};
+					for(; n < MaxIterations; ++n)
 					{
-						isInside = false;
-						break;
+						float Z_re2 = Z_re*Z_re, Z_im2 = Z_im*Z_im;
+						if(Z_re2 + Z_im2 > 4.0f)
+						{
+							isInside = false;
+							break;
+						}
+						Z_im = 2*Z_re*Z_im + c_im;
+						Z_re = Z_re2 - Z_im2 + c_re;
+
+						if (Z_re == prevValuesRe[0] && Z_im == prevValuesIm[0]) // Cycle of period 2
+						{
+							n = MaxIterations;
+							isInside = true;
+							break; // Belongs to the set
+						}
+
+						prevValuesRe[0] = prevValuesRe[1];
+						prevValuesIm[0] = prevValuesIm[1];
+
+						prevValuesRe[1] = Z_re;
+						prevValuesIm[1] = Z_im;
 					}
-					Z_im = 2*Z_re*Z_im + c_im;
-					Z_re = Z_re2 - Z_im2 + c_re;
 				}
+				else
+					n = MaxIterations;
 
 				if (!isInside)
 				{
