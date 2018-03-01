@@ -1,5 +1,7 @@
 #pragma once
 
+#include <complex>
+
 template <class ConcretePainter>
 class TestScreen: public Screen<ConcretePainter, TestScreen<ConcretePainter>> {
 
@@ -15,10 +17,10 @@ public:
 	}
 
 protected:
-	inline bool pointBelongsToCardioid(const float re, const float im)
+	inline bool pointBelongsToCardioid(const std::complex<float> point)
 	{
-		const auto x_offset = re - 0.25f;
-		const auto im_sqr = im * im;
+		const auto x_offset = point.real() - 0.25f;
+		const auto im_sqr = point.imag() * point.imag();
 
 		const auto q = x_offset * x_offset + im_sqr;
 		return q * (q + x_offset) < 0.25f * im_sqr;
@@ -27,16 +29,15 @@ protected:
 
 	void onDraw(Size /* regionToUpdate */)
 	{
-		float MinRe = -2.0;
-		float MaxRe = 1.0;
-		float MinIm = -1.2;
-
 		ConcretePainter painter;
 		const auto w = painter.screenWidth(), h = painter.screenHeight();
 
-		float MaxIm = MinIm+(MaxRe-MinRe)*h/w;
-		float Re_factor = (MaxRe-MinRe)/(w-1);
-		float Im_factor = (MaxIm-MinIm)/(h-1);
+		constexpr float MinRe = -2.0;
+		constexpr float MaxRe = 1.0;
+		constexpr float MinIm = -1.2;
+		const float MaxIm = MinIm+(MaxRe-MinRe)*h/w;
+		const float Re_factor = (MaxRe-MinRe)/(w-1);
+		const float Im_factor = (MaxIm-MinIm)/(h-1);
 		constexpr uint8_t MaxIterations = 30;
 		constexpr float maxIterationsInverse = 1.0f / MaxIterations;
 
@@ -49,38 +50,34 @@ protected:
 			
 			for(unsigned int x = 0; x < w; ++x)
 			{
-				float c_re = MinRe + x*Re_factor;
+				const std::complex<float> c{MinRe + x*Re_factor, c_im};
+				std::complex<float> z = c;
 
-				float Z_re = c_re, Z_im = c_im;
 				bool isInside = true;
 				uint8_t n = 0;
 
-				if (!pointBelongsToCardioid(Z_re, Z_im))
+				if (!pointBelongsToCardioid(z))
 				{
-					float prevValuesRe[2] = {0.0f}, prevValuesIm[2] = {0.0f};
+					std::complex<float> prevValues[2];
 					for(; n < MaxIterations; ++n)
 					{
-						float Z_re2 = Z_re*Z_re, Z_im2 = Z_im*Z_im;
-						if(Z_re2 + Z_im2 > 4.0f)
+						if(std::norm(z) > 4.0f)
 						{
 							isInside = false;
 							break;
 						}
-						Z_im = 2*Z_re*Z_im + c_im;
-						Z_re = Z_re2 - Z_im2 + c_re;
 
-						if (Z_re == prevValuesRe[0] && Z_im == prevValuesIm[0]) // Cycle of period 2
+						z = z * z + c;
+
+						if (z == prevValues[0]) // Cycle of period 2
 						{
 							n = MaxIterations;
 							isInside = true;
 							break; // Belongs to the set
 						}
 
-						prevValuesRe[0] = prevValuesRe[1];
-						prevValuesIm[0] = prevValuesIm[1];
-
-						prevValuesRe[1] = Z_re;
-						prevValuesIm[1] = Z_im;
+						prevValues[0] = prevValues[1];
+						prevValues[1] = z;
 					}
 				}
 				else
@@ -91,12 +88,12 @@ protected:
 					const float t = (float)n * maxIterationsInverse;
   
 					// Use smooth polynomials for r, g, b
-					const int r = (int)(9*(1-t)*t*t*t*255.0f);
-					const int g = (int)(15*(1-t)*(1-t)*t*t*255.0f);
-					const int b =  (int)(8.5*(1-t)*(1-t)*(1-t)*t*255.0f);
+					//const int r = (int)(9*(1-t)*t*t*t*255.0f);
+					//const int g = (int)(15*(1-t)*(1-t)*t*t*255.0f);
+					//const int b =  (int)(8.5*(1-t)*(1-t)*(1-t)*t*255.0f);
 
 					if (!_disablePaint)
-						painter.setPixel(x, y, Color(r, g, b));
+						painter.setPixel(x, y, Color::fromHSV(360.0f * t, 255, 255));
 				}
 			}
 		}
