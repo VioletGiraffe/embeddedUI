@@ -1,5 +1,7 @@
 #pragma once
 
+#include "UiHierarchy.hpp"
+
 #include <complex>
 
 template <class ConcretePainter>
@@ -103,27 +105,27 @@ private:
 	bool _disablePaint = false;
 };
 
-TestScreen<PainterImplementation> screen;
+UiHierarchy<TestScreen<PainterImplementation>> ui;
 
 inline void setupExample()
 {
 	tftInit();
 
 	auto start = millis();
-	screen.update();
+	ui.updateAll();
 	const auto totalTime = millis() - start;
 
-	screen.setDisablePaint(true);
+	ui.getScreen<0>().setDisablePaint(true);
 
 	start = millis();
-	screen.update();
+	ui.updateAll();
 	const auto calculationTime = millis() - start;
 	const auto paintTime = totalTime - calculationTime;
 
-	Serial.println("Drawing Mandelbrot set in " + String(screen.width()) + '*' + String(screen.height()));
-	Serial.println("Total time: " + String(totalTime) + " ms (" + String((uint32_t)screen.width() * (uint32_t)screen.height() * 1000 / totalTime) + " pixels / second)");
-	Serial.println("Calculation time: " + String(calculationTime) + " ms (" + String((uint32_t)screen.width() * (uint32_t)screen.height() * 1000 / calculationTime) + " pixels / second)");
-	Serial.println("Paint time: " + String(paintTime) + " ms (" + String((uint32_t)screen.width() * (uint32_t)screen.height() * 1000 / paintTime) + " pixels / second)");
+	// Serial.println("Drawing Mandelbrot set in " + String(screen.width()) + '*' + String(screen.height()));
+	// Serial.println("Total time: " + String(totalTime) + " ms (" + String((uint32_t)screen.width() * (uint32_t)screen.height() * 1000 / totalTime) + " pixels / second)");
+	// Serial.println("Calculation time: " + String(calculationTime) + " ms (" + String((uint32_t)screen.width() * (uint32_t)screen.height() * 1000 / calculationTime) + " pixels / second)");
+	// Serial.println("Paint time: " + String(paintTime) + " ms (" + String((uint32_t)screen.width() * (uint32_t)screen.height() * 1000 / paintTime) + " pixels / second)");
 }
 
 inline void loopExample()
