@@ -122,10 +122,12 @@ inline void setupExample()
 	const auto calculationTime = millis() - start;
 	const auto paintTime = totalTime - calculationTime;
 
-	// Serial.println("Drawing Mandelbrot set in " + String(screen.width()) + '*' + String(screen.height()));
-	// Serial.println("Total time: " + String(totalTime) + " ms (" + String((uint32_t)screen.width() * (uint32_t)screen.height() * 1000 / totalTime) + " pixels / second)");
-	// Serial.println("Calculation time: " + String(calculationTime) + " ms (" + String((uint32_t)screen.width() * (uint32_t)screen.height() * 1000 / calculationTime) + " pixels / second)");
-	// Serial.println("Paint time: " + String(paintTime) + " ms (" + String((uint32_t)screen.width() * (uint32_t)screen.height() * 1000 / paintTime) + " pixels / second)");
+	const auto& mainScreen = ui.getScreen<0>();
+
+	Serial.println("Drawing Mandelbrot set in " + String(mainScreen.width()) + '*' + String(mainScreen.height()));
+	Serial.println("Total time: " + String(totalTime) + " ms (" + String((uint32_t)mainScreen.width() * (uint32_t)mainScreen.height() * 1000 / totalTime) + " pixels / second)");
+	Serial.println("Calculation time: " + String(calculationTime) + " ms (" + String((uint32_t)mainScreen.width() * (uint32_t)mainScreen.height() * 1000 / calculationTime) + " pixels / second)");
+	Serial.println("Paint time: " + String(paintTime) + " ms (" + String((uint32_t)mainScreen.width() * (uint32_t)mainScreen.height() * 1000 / paintTime) + " pixels / second)");
 }
 
 inline void loopExample()

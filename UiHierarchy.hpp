@@ -11,7 +11,7 @@ public:
 	UiHierarchy() = default;
 
 	template <size_t index>
-	auto getScreen()
+	auto& getScreen()
 	{
 		return std::get<index>(_screens);
 	}
