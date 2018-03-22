@@ -19,3 +19,5 @@ public:
 		return ConcretePainter::screenHeight();
 	}
 };
+
+#define DEFINE_SCREEN(ScreenClassName) template <class ConcretePainter> struct ScreenClassName: public Screen<ConcretePainter, ScreenClassName<ConcretePainter>>

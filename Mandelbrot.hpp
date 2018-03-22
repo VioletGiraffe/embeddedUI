@@ -4,15 +4,10 @@
 
 #include <complex>
 
-template <class ConcretePainter>
-class TestScreen: public Screen<ConcretePainter, TestScreen<ConcretePainter>> {
+DEFINE_SCREEN(TestScreen) {
 
 	template <typename U>
 	friend class Widget;
-
-public:
-	TestScreen() {
-	}
 
 	void setDisablePaint(bool disable) {
 		_disablePaint = disable;
@@ -105,20 +100,31 @@ private:
 	bool _disablePaint = false;
 };
 
-UiHierarchy<TestScreen<PainterImplementation>> ui;
+DEFINE_SCREEN(SecondScreen) {
+	void onDraw(Size /* regionToUpdate */)
+	{
+		ConcretePainter painter;
+		painter.fillScreen(Color::azure());
+	}
+};
+
+UiHierarchy<TestScreen<PainterImplementation>, SecondScreen<PainterImplementation>> ui;
 
 inline void setupExample()
 {
 	tftInit();
 
+	ui.toNextScreen();
+	ui.toFirstScreen();
+
 	auto start = millis();
-	ui.updateAll();
+	ui.updateCurrentScreen();
 	const auto totalTime = millis() - start;
 
 	ui.getScreen<0>().setDisablePaint(true);
 
 	start = millis();
-	ui.updateAll();
+	ui.updateCurrentScreen();
 	const auto calculationTime = millis() - start;
 	const auto paintTime = totalTime - calculationTime;
 
