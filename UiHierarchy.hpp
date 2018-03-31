@@ -3,21 +3,18 @@
 #include "Widget.h"
 #include <tuple/tuple_helpers.hpp>
 
-#include <algorithm>
 #include <tuple>
 
 template <class... ListOfScreenTypes>
 class UiHierarchy {
 public:
-	UiHierarchy() = default;
-
 	template <size_t index>
 	auto& getScreen()
 	{
 		return std::get<index>(_screens);
 	}
 
-	constexpr size_t numScreens()
+	constexpr size_t numScreens() const
 	{
 		return std::tuple_size<decltype(_screens)>::value;
 	}
