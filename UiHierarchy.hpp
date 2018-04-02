@@ -62,10 +62,16 @@ public:
 
 	void updateCurrentScreen()
 	{
-		tuple::visit_at(_screens, _currentScreenIndex, [](auto& screen){
-			screen.update();
-		});
+		tuple::visit_at(_screens, _currentScreenIndex, ScreenUpdateFunctor());
 	}
+
+private: // TODO: replace with [](auto& screen) {screen.update();} as soon as Due platform supports this
+	struct ScreenUpdateFunctor {
+		template <typename ScreenType>
+		void operator()(ScreenType& screen) {
+			screen.update();
+		}
+	};
 
 private:
 	std::tuple<ListOfScreenTypes...> _screens;
