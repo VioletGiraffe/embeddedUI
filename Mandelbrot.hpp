@@ -24,7 +24,7 @@ protected:
 	}
 
 
-	void onDraw(Size /* regionToUpdate */)
+	void onDraw(Rect /* updateRect */, Rect /* excludeRect */)
 	{
 		ConcretePainter painter;
 		const auto w = painter.screenWidth(), h = painter.screenHeight();
@@ -101,7 +101,7 @@ private:
 };
 
 DEFINE_SCREEN(SecondScreen) {
-	void onDraw(Size /* regionToUpdate */)
+	void onDraw(Rect /* updateRect */, Rect /* excludeRect */)
 	{
 		ConcretePainter painter;
 		painter.fillScreen(Color::azure());
