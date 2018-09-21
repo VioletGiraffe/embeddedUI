@@ -2,9 +2,13 @@
 
 #if defined ARDUINO_AVR_UNO
 
-	#include "SSD1351_Screen_Setup_Adafruit.h"
-	#include "Painter_Adafruit_SSD1351.h"
-	using PainterImplementation = PainterAdafruitSsd1351;
+	// #include "SSD1351_Screen_Setup_Adafruit.h"
+	// #include "Painter_Adafruit_SSD1351.h"
+	// using PainterImplementation = PainterAdafruitSsd1351;
+
+	#include "Mcufriend_Screen_Setup.h"
+	#include "Painter_MCUFRIEND.h"
+	using PainterImplementation = PainterMcufriend;
 
 #elif defined ARDUINO_SAM_DUE
 
