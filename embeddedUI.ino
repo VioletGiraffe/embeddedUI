@@ -6,9 +6,9 @@
 	// #include "Painter_Adafruit_SSD1351.h"
 	// using PainterImplementation = PainterAdafruitSsd1351;
 
-	#include "Mcufriend_Screen_Setup.h"
-	#include "Painter_MCUFRIEND.h"
-	using PainterImplementation = PainterMcufriend;
+	#include "ST7735S_IPS_Screen_Setup_Adafruit.h"
+	#include "Painter_Adafruit_ST7735.h"
+	using PainterImplementation = PainterAdafruitST7735;
 
 #elif defined ARDUINO_SAM_DUE
 
@@ -31,7 +31,7 @@ struct Initializer {
 	}
 } staticInitializer;
 
-#include "Mandelbrot.hpp"
+#include "Colors_test.hpp"
 
 void setup(void)
 {

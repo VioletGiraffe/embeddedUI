@@ -12,12 +12,12 @@ public:
 
 protected:
 
-	void onDraw(Size /* regionToUpdate */)
+	void onDraw(const Rect /*updateRect*/, const Rect /*excludeRect*/)
 	{
         ConcretePainter painter;
 
-        constexpr int stripeHeight = 1;
-        const int numColors = this->height() / stripeHeight;
+        constexpr int stripeHeight = 20;
+        const uint16_t numColors = this->height() / stripeHeight;
         for (uint8_t i = 0; i < numColors; ++i)
         {
             painter.fillRect(Point{0, i * stripeHeight}, Size{this->width(), stripeHeight}, Color::fromHSV(i * 360 / numColors, 255, 255));
